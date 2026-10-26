@@ -1,26 +1,132 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+/* FoodOps ERP design tokens: food-drink-erp-guide.md section 5.2 (light theme, MVP).
+   Dark mode is roadmap; keep every colour as a variable so it can be added later. */
+
+@custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --radius: 0.5rem;
+
+  --background: #fbf8f2; /* warm cream */
+  --foreground: #1e2b26;
+  --card: #ffffff;
+  --card-foreground: #1e2b26;
+  --popover: #ffffff;
+  --popover-foreground: #1e2b26;
+
+  --primary: #2f5d50; /* deep sage green */
+  --primary-hover: #264d42;
+  --primary-foreground: #ffffff;
+  --secondary: #e8efec;
+  --secondary-foreground: #2f5d50;
+
+  --muted: #f2ede3;
+  --muted-foreground: #5e6b65;
+  /* shadcn "accent" = hover background only. Terracotta lives in --brand-accent. */
+  --accent: #f2ede3;
+  --accent-foreground: #1e2b26;
+
+  --brand-accent: #c8693f; /* terracotta: large text / highlights only */
+  --brand-accent-strong: #a4532e; /* terracotta safe for small text */
+  --brand-accent-soft: #f6e3d8;
+
+  --destructive: #b42318;
+  --border: #e3dacb;
+  --input: #d9cfbe;
+  --ring: #2f5d50;
+
+  --success: #2e7d4f;
+  --success-soft: #e3f1e8;
+  --warning: #b7791f;
+  --warning-text: #8a5a12;
+  --warning-soft: #fbf0dc;
+  --danger: #b42318;
+  --danger-soft: #fde7e5;
+  --info: #2f6690;
+  --info-soft: #e2edf5;
+
+  --chart-1: #2f5d50;
+  --chart-2: #c8693f;
+  --chart-3: #2f6690;
+  --chart-4: #b7791f;
+  --chart-5: #7a8c84;
+
+  --sidebar: #f5f0e6;
+  --sidebar-foreground: #1e2b26;
+  --sidebar-primary: #2f5d50;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #e8efec;
+  --sidebar-accent-foreground: #2f5d50;
+  --sidebar-border: #e3dacb;
+  --sidebar-ring: #2f5d50;
 }
 
 @theme inline {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-brand-accent: var(--brand-accent);
+  --color-brand-accent-strong: var(--brand-accent-strong);
+  --color-brand-accent-soft: var(--brand-accent-soft);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
+  --color-warning: var(--warning);
+  --color-warning-text: var(--warning-text);
+  --color-warning-soft: var(--warning-soft);
+  --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
+  --color-info: var(--info);
+  --color-info-soft: var(--info-soft);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Quantities, money, dates and codes line up in columns (spec 5.3). */
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  body {
+    @apply bg-background text-foreground;
+  }
 }
